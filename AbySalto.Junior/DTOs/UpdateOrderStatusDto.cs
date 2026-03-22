@@ -1,6 +1,4 @@
-﻿using AbySalto.Junior.Models;
-
-namespace AbySalto.Junior.DTOs
+﻿namespace AbySalto.Junior.DTOs
 {
     public class UpdateOrderStatusDto
     {

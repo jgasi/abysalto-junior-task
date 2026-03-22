@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace AbySalto.Junior.Tests.Integration
 {
     [TestFixture]
-    public class OrdersControllerTests
+    public class OrderServiceIntegrationTests
     {
         private ApplicationDbContext _context;
         private OrderService _service;

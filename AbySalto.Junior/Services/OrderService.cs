@@ -55,7 +55,7 @@ namespace AbySalto.Junior.Services
 
         public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(bool sortByTotal = false, CancellationToken ct = default)
         {
-            var cacheKey = sortByTotal ? "all_orders_sorted" : AllOrdersCacheKey;
+            var cacheKey = sortByTotal ? AllOrdersSortedCacheKey : AllOrdersCacheKey;
 
             if (_cache.TryGetValue(cacheKey, out IEnumerable<OrderDto>? cachedOrders) && cachedOrders != null)
             {
@@ -64,11 +64,8 @@ namespace AbySalto.Junior.Services
             }
 
             _logger.LogInformation("Cache miss - fetching orders from database");
-            var orders = await _orderRepository.GetAllAsync(ct);
+            var orders = await _orderRepository.GetAllAsync(sortByTotal, ct);
             var dtos = orders.Select(MapToDto).ToList();
-
-            if (sortByTotal)
-                dtos = dtos.OrderByDescending(o => o.TotalAmount).ToList();
 
             _cache.Set(cacheKey, dtos, TimeSpan.FromMinutes(5));
 

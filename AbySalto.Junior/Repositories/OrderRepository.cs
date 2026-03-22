@@ -20,11 +20,14 @@ namespace AbySalto.Junior.Repositories
             return order;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<Order>> GetAllAsync(bool sortByTotal = false, CancellationToken ct = default)
         {
-            return await _context.Orders
-                .Include(o => o.Items)
-                .ToListAsync(ct);
+            var query = _context.Orders.Include(o => o.Items).AsQueryable();
+
+            if (sortByTotal)
+                query = query.OrderByDescending(o => o.Items.Sum(i => i.Price * i.Quantity));
+
+            return await query.ToListAsync(ct);
         }
 
         public async Task<Order?> GetByIdAsync(int id, CancellationToken ct = default)
