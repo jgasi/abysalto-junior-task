@@ -1,6 +1,6 @@
 ﻿using AbySalto.Junior.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AbySalto.Junior.Infrastructure.Database.Configurations
 {

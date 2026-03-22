@@ -4,7 +4,7 @@
 GET {{AbySalto.Junior_HostAddress}}/api/restaurant/orders
 Accept: application/json
 
-### Dohvati sve narudžbe sortirane po ukupnom iznosu
+### Dohvati sve narudžbe sortirane prema izraèunatom ukupnom iznosu raèuna
 GET {{AbySalto.Junior_HostAddress}}/api/restaurant/orders?sortByTotal=true
 Accept: application/json
 

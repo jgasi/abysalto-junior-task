@@ -1,6 +1,6 @@
-﻿using AbySalto.Junior.Exceptions;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
+using AbySalto.Junior.Exceptions;
 
 namespace AbySalto.Junior.Infrastructure.Middleware
 {
