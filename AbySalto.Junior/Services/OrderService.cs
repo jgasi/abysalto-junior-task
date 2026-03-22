@@ -46,6 +46,7 @@ namespace AbySalto.Junior.Services
             var created = await _orderRepository.CreateAsync(order, ct);
 
             _cache.Remove(AllOrdersCacheKey);
+            _cache.Remove("all_orders_sorted");
             _logger.LogInformation("Order created successfully with ID: {OrderId}", created.Id);
 
             return MapToDto(created);

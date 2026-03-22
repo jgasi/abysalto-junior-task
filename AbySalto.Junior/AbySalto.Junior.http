@@ -1,6 +1,41 @@
 @AbySalto.Junior_HostAddress = http://localhost:5074
 
-GET {{AbySalto.Junior_HostAddress}}/weatherforecast/
+### Dohvati sve narudžbe
+GET {{AbySalto.Junior_HostAddress}}/api/restaurant/orders
 Accept: application/json
 
-###
+### Dohvati sve narudžbe sortirane po ukupnom iznosu
+GET {{AbySalto.Junior_HostAddress}}/api/restaurant/orders?sortByTotal=true
+Accept: application/json
+
+### Dohvati narudžbu po ID-u
+GET {{AbySalto.Junior_HostAddress}}/api/restaurant/orders/1
+Accept: application/json
+
+### Kreiraj novu narudžbu
+POST {{AbySalto.Junior_HostAddress}}/api/restaurant/orders
+Content-Type: application/json
+
+{
+  "customerName": "Test Korisnik",
+  "paymentMethod": "Cash",
+  "deliveryAddress": "Testna ulica 1, Zagreb",
+  "contactNumber": "0911234567",
+  "note": "Bez alergena",
+  "currency": "EUR",
+  "items": [
+    {
+      "name": "Pizza",
+      "quantity": 2,
+      "price": 8.50
+    }
+  ]
+}
+
+### Promijeni status narudžbe
+PATCH {{AbySalto.Junior_HostAddress}}/api/restaurant/orders/1/status
+Content-Type: application/json
+
+{
+  "status": 1
+}
