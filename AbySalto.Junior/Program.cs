@@ -45,8 +45,10 @@ namespace AbySalto.Junior
                 {
                     db.Database.Migrate();
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ex)
                 {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogWarning(ex, "Database migration skipped: {Message}", ex.Message);
                 }
             }
 

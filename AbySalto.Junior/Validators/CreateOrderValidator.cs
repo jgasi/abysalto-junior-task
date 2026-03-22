@@ -55,7 +55,8 @@ namespace AbySalto.Junior.Validators
         public UpdateOrderStatusValidator()
         {
             RuleFor(x => x.Status)
-                .IsInEnum().WithMessage("Invalid status value. Allowed values: 0 (Pending), 1 (InPreparation), 2 (Completed).");
+                .Must(s => Enum.IsDefined(typeof(Models.OrderStatus), s))
+                .WithMessage("Invalid status value. Allowed values: 0 (Pending), 1 (InPreparation), 2 (Completed).");
         }
     }
 }

@@ -13,6 +13,7 @@ namespace AbySalto.Junior.Services
         private readonly ILogger<OrderService> _logger;
 
         private const string AllOrdersCacheKey = "all_orders";
+        private const string AllOrdersSortedCacheKey = "all_orders_sorted";
 
         public OrderService(IOrderRepository orderRepository, IMemoryCache cache, ILogger<OrderService> logger)
         {
@@ -46,7 +47,7 @@ namespace AbySalto.Junior.Services
             var created = await _orderRepository.CreateAsync(order, ct);
 
             _cache.Remove(AllOrdersCacheKey);
-            _cache.Remove("all_orders_sorted");
+            _cache.Remove(AllOrdersSortedCacheKey);
             _logger.LogInformation("Order created successfully with ID: {OrderId}", created.Id);
 
             return MapToDto(created);
@@ -116,10 +117,11 @@ namespace AbySalto.Junior.Services
                 throw new InvalidOrderStatusException($"Order {id} is already completed and cannot be updated.");
             }
 
-            order.Status = dto.Status;
+            order.Status = (OrderStatus)dto.Status;
             await _orderRepository.UpdateAsync(order, ct);
 
             _cache.Remove(AllOrdersCacheKey);
+            _cache.Remove(AllOrdersSortedCacheKey);
             _cache.Remove($"order_{id}");
 
             _logger.LogInformation("Order {OrderId} status updated successfully", id);

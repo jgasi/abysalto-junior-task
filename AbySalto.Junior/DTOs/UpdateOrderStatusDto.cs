@@ -4,6 +4,6 @@ namespace AbySalto.Junior.DTOs
 {
     public class UpdateOrderStatusDto
     {
-        public OrderStatus Status { get; set; }
+        public int Status { get; set; }
     }
 }

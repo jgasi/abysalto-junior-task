@@ -133,7 +133,7 @@ namespace AbySalto.Junior.Tests
                 .Setup(x => x.GetByIdAsync(1, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(order);
 
-            var dto = new UpdateOrderStatusDto { Status = OrderStatus.Pending };
+            var dto = new UpdateOrderStatusDto { Status = (int)OrderStatus.Pending };
 
             // Act & Assert
             Assert.ThrowsAsync<InvalidOrderStatusException>(async () =>
@@ -164,7 +164,7 @@ namespace AbySalto.Junior.Tests
                 .Setup(x => x.UpdateAsync(It.IsAny<Order>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
-            var dto = new UpdateOrderStatusDto { Status = OrderStatus.InPreparation };
+            var dto = new UpdateOrderStatusDto { Status = (int)OrderStatus.InPreparation };
 
             // Act
             var result = await _orderService.UpdateOrderStatusAsync(1, dto);

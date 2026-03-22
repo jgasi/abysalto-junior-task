@@ -1,6 +1,7 @@
 ﻿using AbySalto.Junior.DTOs;
 using AbySalto.Junior.Exceptions;
 using AbySalto.Junior.Infrastructure.Database;
+using AbySalto.Junior.Models;
 using AbySalto.Junior.Repositories;
 using AbySalto.Junior.Services;
 using Microsoft.EntityFrameworkCore;
@@ -152,7 +153,7 @@ namespace AbySalto.Junior.Tests.Integration
             };
 
             var created = await _service.CreateOrderAsync(dto);
-            var updateDto = new UpdateOrderStatusDto { Status = Models.OrderStatus.InPreparation };
+            var updateDto = new UpdateOrderStatusDto { Status = (int)OrderStatus.InPreparation };
 
             // Act
             var result = await _service.UpdateOrderStatusAsync(created.Id, updateDto);
