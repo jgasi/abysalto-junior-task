@@ -16,9 +16,9 @@ namespace AbySalto.Junior.Controllers
         }
 
         [HttpGet("orders")]
-        public async Task<IActionResult> GetOrders(CancellationToken ct = default)
+        public async Task<IActionResult> GetOrders([FromQuery] bool sortByTotal = false, CancellationToken ct = default)
         {
-            var orders = await _orderService.GetAllOrdersAsync(ct);
+            var orders = await _orderService.GetAllOrdersAsync(sortByTotal, ct);
             return Ok(orders);
         }
 

@@ -51,9 +51,11 @@ namespace AbySalto.Junior.Services
             return MapToDto(created);
         }
 
-        public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(bool sortByTotal = false, CancellationToken ct = default)
         {
-            if (_cache.TryGetValue(AllOrdersCacheKey, out IEnumerable<OrderDto>? cachedOrders) && cachedOrders != null)
+            var cacheKey = sortByTotal ? "all_orders_sorted" : AllOrdersCacheKey;
+
+            if (_cache.TryGetValue(cacheKey, out IEnumerable<OrderDto>? cachedOrders) && cachedOrders != null)
             {
                 _logger.LogInformation("Returning orders from cache");
                 return cachedOrders;
@@ -63,7 +65,10 @@ namespace AbySalto.Junior.Services
             var orders = await _orderRepository.GetAllAsync(ct);
             var dtos = orders.Select(MapToDto).ToList();
 
-            _cache.Set(AllOrdersCacheKey, dtos, TimeSpan.FromMinutes(5));
+            if (sortByTotal)
+                dtos = dtos.OrderByDescending(o => o.TotalAmount).ToList();
+
+            _cache.Set(cacheKey, dtos, TimeSpan.FromMinutes(5));
 
             return dtos;
         }
