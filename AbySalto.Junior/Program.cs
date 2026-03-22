@@ -3,6 +3,8 @@ using AbySalto.Junior.Infrastructure.Database;
 using AbySalto.Junior.Infrastructure.Middleware;
 using AbySalto.Junior.Repositories;
 using AbySalto.Junior.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -15,7 +17,8 @@ namespace AbySalto.Junior
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddOpenApi();
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>(); builder.Services.AddOpenApi();
             builder.Services.AddMemoryCache();
 
             builder.Services.AddEndpointsApiExplorer();
